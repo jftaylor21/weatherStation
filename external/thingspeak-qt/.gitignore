@@ -1,0 +1,9 @@
+*.user
+*.dll
+*.a
+Makefile.Debug
+Makefile.Release
+Makefile
+*.o
+*.exe
+moc_*.cpp
