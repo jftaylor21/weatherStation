@@ -28,7 +28,7 @@ bool ThingSpeak::post(const ThingSpeakPacket &update, int timeoutMS)
 
   QTime time;
   time.start();
-  while(!reply->isFinished() || time.elapsed() > timeoutMS)
+  while(!reply->isFinished() && time.elapsed() < timeoutMS)
   {
     qApp->processEvents();
   }
