@@ -29,11 +29,22 @@ namespace
 
 bool ThingSpeak::post(const ThingSpeakPacket &update, int timeoutMS)
 {
-  if (fPostLimit > 0 && !fPostLimitTime.isNull() && fPostLimitTime.elapsed() < fPostLimit)
+  if (fPostLimit > 0)
   {
-    return false;
+    // fPostLimitTime will be null only for the first post
+    if (fPostLimitTime.isNull())
+    {
+      fPostLimitTime.start();
+    }
+    else
+    {
+      if (static_cast<unsigned int>(fPostLimitTime.elapsed())/1000 < fPostLimit)
+      {
+        return false;
+      }
+      fPostLimitTime.restart();
+    }
   }
-  fPostLimitTime.restart();
   
   QUrlQuery params(update.getQUrlQuery(fAPIKey));
 
