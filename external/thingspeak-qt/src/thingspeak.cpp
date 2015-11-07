@@ -7,8 +7,19 @@
 #include <QNetworkReply>
 
 ThingSpeak::ThingSpeak(const QString& apiKey)
-  : fAPIKey(apiKey)
+  : fAPIKey(apiKey),
+    fPostLimit(0)
 {
+}
+
+void ThingSpeak::setPostLimit(unsigned int seconds)
+{
+  fPostLimit = seconds;
+}
+
+unsigned int ThingSpeak::getPostLimit() const
+{
+  return fPostLimit;
 }
 
 namespace
@@ -18,6 +29,12 @@ namespace
 
 bool ThingSpeak::post(const ThingSpeakPacket &update, int timeoutMS)
 {
+  if (fPostLimit > 0 && !fPostLimitTime.isNull() && fPostLimitTime.elapsed() < fPostLimit)
+  {
+    return false;
+  }
+  fPostLimitTime.restart();
+  
   QUrlQuery params(update.getQUrlQuery(fAPIKey));
 
   QNetworkRequest request(THINGSPEAK_URL);
