@@ -41,6 +41,7 @@ void loop() {
   ThingSpeak.setField(2, pressureHg);
   ThingSpeak.setField(3, humidity);
   ThingSpeak.writeFields(THINGSPEAK_CHANNEL, THINGSPEAK_API_KEY);
-  
+
+  Ethernet.maintain();
   delay(LOOP_DELAY);
 }

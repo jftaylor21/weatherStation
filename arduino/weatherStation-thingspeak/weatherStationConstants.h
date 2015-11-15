@@ -6,9 +6,12 @@ const int HH10D_SENSITIVITY(402);
 
 const float ELEVATION_IN_METERS(62.7);
 
-const byte MAC_ADDRESS[] = {0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa};
+// Ethernet library does not take const inputs so we cannot make this const
+byte MAC_ADDRESS[] = {0x13, 0xdb, 0x29, 0x54, 0xde, 0xb9};
 
 const unsigned long THINGSPEAK_CHANNEL(????);
 const char* THINGSPEAK_API_KEY("API_KEY");
+
+const unsigned long LOOP_DELAY(1000 * 60 * 5);
 
 #endif
